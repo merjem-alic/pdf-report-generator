@@ -22,9 +22,25 @@ app.get('/health', (req, res) => {
 // POST /reports — generate a new report
 app.post('/reports', async (req, res) => {
   try {
+    const force = req.body?.force === true;
+    const todayStart = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+    if (!force) {
+      const existing = db.prepare(
+        "SELECT * FROM reports WHERE date(created_at) = date(?) ORDER BY id DESC LIMIT 1"
+      ).get(todayStart);
+
+      if (existing) {
+        return res.status(200).json({
+          id: existing.id,
+          file: `/reports/${existing.id}/file`
+        });
+      }
+    }
+
     const createdAt = new Date().toISOString();
     const insertStub = db.prepare('INSERT INTO reports (path, created_at) VALUES (?, ?)');
-    const info = insertStub.run('', createdAt); // placeholder row to get an id
+    const info = insertStub.run('', createdAt);
     const id = info.lastInsertRowid;
 
     const filePath = path.join(__dirname, 'reports', `${id}.pdf`);

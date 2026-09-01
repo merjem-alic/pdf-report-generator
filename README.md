@@ -5,23 +5,23 @@ Query a small SQLite database with SQL aggregatoin, render the results into a re
 Reused the 60 valudared book records collected in the polite scraper assignment (books.json), rather than just generating fake seed data; real data is already collected and validated.
 
 ## How to run
-'''
+```
 git clone https://github.com/merjem-alic/pdf-report-generator.git
 cd pdf-report-generator
 npm install
 npx playwright install chromium
 node seed.js       # seeds report.db from data/books.json
 npm start          # starts the API on http://localhost:3000
-'''
+```
 
 Then in another terminal:
-'''
+```
 curl -i -X POST http://localhost:3000/reports
 curl -o my-report.pdf http://localhost:3000/reports/1/file
-'''
+```
 
 ## Aggregation SQL
-'''
+```
 -- Total books
 SELECT COUNT(*) AS count FROM books;
 
@@ -33,15 +33,15 @@ SELECT title, price FROM books ORDER BY price DESC LIMIT 5;
 
 -- Books per star rating
 SELECT rating, COUNT(*) AS count FROM books GROUP BY rating ORDER BY rating;
-'''
+```
 
 ## POST -> download proof
-'''
+```
 PS> Measure-Command { Invoke-RestMethod -Uri http://localhost:3000/reports -Method Post }
 TotalMilliseconds : 954.0007
 
 PS> Invoke-WebRequest -Uri http://localhost:3000/reports/1/file -OutFile my-report.pdf
-'''
+```
 
 Real, visible pause (~1s) before the response, then a 3-page PDF downloaded and opened successfully. 
 

@@ -1,0 +1,26 @@
+{
+  "name": "pdf-report-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merjem-alic/pdf-report-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/merjem-alic/pdf-report-generator/issues"
+  },
+  "homepage": "https://github.com/merjem-alic/pdf-report-generator#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "playwright": "^1.62.1"
+  }
+}
